@@ -1,1 +1,1 @@
-# tailwindcss-library-template
+# tailwindcss-library-starter
