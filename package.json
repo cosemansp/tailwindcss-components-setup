@@ -14,7 +14,9 @@
     "postutilities": "prejss-cli dist/utilities.css --format commonjs",
     "themes": "postcss src/themes/index.css -o dist/themes.css --config src/themes",
     "build": "npm run utilities && npm run components && npm run prejss && npm run themes && npm run full",
-    "dev": "cd src/docs && npm run dev"
+    "dev": "cd src/docs && npm run dev",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "repository": {
     "type": "git",
@@ -46,6 +48,12 @@
     "tailwindcss": "^3"
   },
   "devDependencies": {
+    "@storybook/addon-essentials": "^7.0.0-beta.25",
+    "@storybook/addon-links": "^7.0.0-beta.25",
+    "@storybook/blocks": "^7.0.0-beta.25",
+    "@storybook/html": "^7.0.0-beta.25",
+    "@storybook/html-vite": "^7.0.0-beta.25",
+    "@tailwindcss/typography": "^0.5.9",
     "autoprefixer": "10.0.4",
     "color": "^4.2.3",
     "postcss": "8.3.3",
@@ -54,7 +62,12 @@
     "postcss-import": "13.0.0",
     "postcss-nested": "5.0.1",
     "prejss-cli": "0.3.3",
-    "prettier": "^2.7.1"
+    "prettier": "^2.7.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "storybook": "^7.0.0-beta.25",
+    "ts-dedent": "^2.2.0",
+    "vite": "^4.0.4"
   },
   "peerDependencies": {
     "autoprefixer": "^10.0.2",

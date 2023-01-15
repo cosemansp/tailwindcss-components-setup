@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* @layer components {
+  h1 h2 h3 h4 body {
+    @apply text-base-content;
+  }
+} */
+
+/* @layer base {
+  h1 {
+    @apply text-base-content text-3xl font-bold md:text-4xl;
+  }
+
+  h2 {
+    @apply text-base-content text-2xl font-bold md:text-3xl;
+  }
+
+  h3 {
+    @apply text-base-content text-xl font-bold md:text-2xl;
+  }
+
+  h4 {
+    @apply text-base-content text-lg font-bold md:text-lg;
+  }
+
+  body {
+    @apply text-base-content md:text-base;
+  }
+} */
+
+.red {
+  color: red;
+}

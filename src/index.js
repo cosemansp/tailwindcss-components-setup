@@ -1,10 +1,6 @@
-const postcssJs = require("postcss-js");
-// const postcssPrefix = require("./lib/postcss-prefixer");
 const colors = require("./colors/index");
 const pkg = require("../package.json");
-const components = require("../dist/components");
-const utilities = require("../dist/utilities");
-const colorFunctions = require("./colors/functions");
+const { convertToHsl } = require("./colors/functions");
 const themes = require("./colors/themes");
 
 const mainFunction = ({ addBase, addComponents, addUtilities, config, postcss }) => {
@@ -20,34 +16,21 @@ const mainFunction = ({ addBase, addComponents, addUtilities, config, postcss })
     console.group();
   }
 
-  // inject components
-  let file = components;
-  includedItems.push("components");
-
-  // add prefix to class names if specified
-  // const prefix = config("myLib.prefix");
-  // let postcssJsProcess;
-  // if (prefix) {
-  //   try {
-  //     postcssJsProcess = postcssJs.sync(postcssPrefix({ prefix, ignore: [] }));
-  //   } catch (error) {
-  //     logs && console.error(`Error occurred and prevent applying the "prefix" option:`, error);
-  //   }
-  // }
-  // const shouldApplyPrefix = prefix && postcssJsProcess;
-  // if (shouldApplyPrefix) {
-  //   file = postcssJsProcess(file);
-  // }
-  addComponents(file);
-
-  const themeInjector = colorFunctions.injectThemes(addBase, config, themes);
-  includedItems.push(themeInjector.themeOrder.length + " themes");
-
-  // inject @utilities style needed by components
-  if (config("myLib.utils") != false) {
-    addComponents(utilities, { variants: ["responsive"] });
-    includedItems.push("utilities");
-  }
+  // add light theme
+  addBase({
+    [":root"]: convertToHsl(themes["[data-theme=light]"]),
+  });
+  includedItems.push("light theme");
+  // add dark theme
+  addBase({
+    ["@media (prefers-color-scheme: dark)"]: {
+      [":root"]: convertToHsl(themes["[data-theme=dark]"]),
+    },
+  });
+  addBase({
+    ["[data-theme=dark]"]: convertToHsl(themes["[data-theme=dark]"]),
+  });
+  includedItems.push("dark theme");
 
   if (logs) {
     console.log("\x1b[32m%s\x1b[0m", "✔︎ Including:", "\x1b[0m", "" + includedItems.join(", "));

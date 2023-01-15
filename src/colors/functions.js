@@ -167,100 +167,100 @@ module.exports = {
     return input;
   },
 
-  injectThemes: function (addBase, config, themes) {
-    let includedThemesObj = new Object();
+  //   injectThemes: function (addBase, config, themes) {
+  //     let includedThemesObj = new Object();
 
-    const darkThemeConfig = config("myLib.darkTheme");
-    const themesConfig = config("myLib.themes");
+  //     const darkThemeConfig = config("myLib.darkTheme");
+  //     const themesConfig = config("myLib.themes");
 
-    // add light themes
-    if (themesConfig == false) {
-      Object.entries(themes).forEach(([theme, index]) => {
-        includedThemesObj[theme] = this.convertToHsl(themes[theme]);
-      });
-    }
+  //     // add light themes
+  //     if (themesConfig == false) {
+  //       Object.entries(themes).forEach(([theme, index]) => {
+  //         includedThemesObj[theme] = this.convertToHsl(themes[theme]);
+  //       });
+  //     }
 
-    // add default themes
-    if (themesConfig != false) {
-      Object.entries(themes).forEach(([theme, index]) => {
-        includedThemesObj[theme] = this.convertToHsl(themes[theme]);
-      });
-    }
+  //     // add default themes
+  //     if (themesConfig != false) {
+  //       Object.entries(themes).forEach(([theme, index]) => {
+  //         includedThemesObj[theme] = this.convertToHsl(themes[theme]);
+  //       });
+  //     }
 
-    // add custom themes
-    if (Array.isArray(themesConfig)) {
-      themesConfig.forEach((item, index) => {
-        if (typeof item === "object" && item !== null) {
-          Object.entries(item).forEach(([customThemeName, customThemevalue]) => {
-            includedThemesObj["[data-theme=" + customThemeName + "]"] = this.convertToHsl(customThemevalue);
-          });
-        }
-      });
-    }
+  //     // add custom themes
+  //     if (Array.isArray(themesConfig)) {
+  //       themesConfig.forEach((item, index) => {
+  //         if (typeof item === "object" && item !== null) {
+  //           Object.entries(item).forEach(([customThemeName, customThemevalue]) => {
+  //             includedThemesObj["[data-theme=" + customThemeName + "]"] = this.convertToHsl(customThemevalue);
+  //           });
+  //         }
+  //       });
+  //     }
 
-    let themeOrder = [];
-    if (Array.isArray(themesConfig)) {
-      themesConfig.forEach((theme, index) => {
-        if (typeof theme === "object" && theme !== null) {
-          Object.entries(theme).forEach(([customThemeName, customThemevalue]) => {
-            themeOrder.push(customThemeName);
-          });
-        } else if (includedThemesObj.hasOwnProperty("[data-theme=" + theme + "]")) {
-          themeOrder.push(theme);
-        }
-      });
-    } else if (themesConfig != false) {
-      themeOrder = ["light", "dark", "cupcake", "bumblebee", "emerald", "corporate", "synthwave", "retro", "cyberpunk", "valentine", "halloween", "garden", "forest", "aqua", "lofi", "pastel", "fantasy", "wireframe", "black", "luxury", "dracula", "cmyk", "autumn", "business", "acid", "lemonade", "night", "coffee", "winter"];
-    } else if (themesConfig == false) {
-      themeOrder.push("light");
-    }
+  //     let themeOrder = [];
+  //     if (Array.isArray(themesConfig)) {
+  //       themesConfig.forEach((theme, index) => {
+  //         if (typeof theme === "object" && theme !== null) {
+  //           Object.entries(theme).forEach(([customThemeName, customThemevalue]) => {
+  //             themeOrder.push(customThemeName);
+  //           });
+  //         } else if (includedThemesObj.hasOwnProperty("[data-theme=" + theme + "]")) {
+  //           themeOrder.push(theme);
+  //         }
+  //       });
+  //     } else if (themesConfig != false) {
+  //       themeOrder = ["light", "dark", "cupcake", "bumblebee", "emerald", "corporate", "synthwave", "retro", "cyberpunk", "valentine", "halloween", "garden", "forest", "aqua", "lofi", "pastel", "fantasy", "wireframe", "black", "luxury", "dracula", "cmyk", "autumn", "business", "acid", "lemonade", "night", "coffee", "winter"];
+  //     } else if (themesConfig == false) {
+  //       themeOrder.push("light");
+  //     }
 
-    // inject themes in order
-    themeOrder.forEach((themeName, index) => {
-      if (index === 0) {
-        // first theme as root
-        addBase({
-          [":root"]: includedThemesObj["[data-theme=" + themeName + "]"],
-        });
-      } else if (index === 1) {
-        // auto dark
-        if (darkThemeConfig) {
-          if (themeOrder[0] != darkThemeConfig && themeOrder.includes(darkThemeConfig)) {
-            addBase({
-              ["@media (prefers-color-scheme: dark)"]: {
-                [":root"]: includedThemesObj[`[data-theme=${darkThemeConfig}]`],
-              },
-            });
-          }
-        } else if (darkThemeConfig === false) {
-          // disables prefers-color-scheme: dark
-        } else {
-          if (themeOrder[0] != "dark" && themeOrder.includes("dark")) {
-            addBase({
-              ["@media (prefers-color-scheme: dark)"]: {
-                [":root"]: includedThemesObj["[data-theme=dark]"],
-              },
-            });
-          }
-        }
-        // theme 0 with name
-        addBase({
-          ["[data-theme=" + themeOrder[0] + "]"]: includedThemesObj["[data-theme=" + themeOrder[0] + "]"],
-        });
-        // theme 1 with name
-        addBase({
-          ["[data-theme=" + themeOrder[1] + "]"]: includedThemesObj["[data-theme=" + themeOrder[1] + "]"],
-        });
-      } else {
-        addBase({
-          ["[data-theme=" + themeName + "]"]: includedThemesObj["[data-theme=" + themeName + "]"],
-        });
-      }
-    });
+  //     // inject themes in order
+  //     themeOrder.forEach((themeName, index) => {
+  //       if (index === 0) {
+  //         // first theme as root
+  //         addBase({
+  //           [":root"]: includedThemesObj["[data-theme=" + themeName + "]"],
+  //         });
+  //       } else if (index === 1) {
+  //         // auto dark
+  //         if (darkThemeConfig) {
+  //           if (themeOrder[0] != darkThemeConfig && themeOrder.includes(darkThemeConfig)) {
+  //             addBase({
+  //               ["@media (prefers-color-scheme: dark)"]: {
+  //                 [":root"]: includedThemesObj[`[data-theme=${darkThemeConfig}]`],
+  //               },
+  //             });
+  //           }
+  //         } else if (darkThemeConfig === false) {
+  //           // disables prefers-color-scheme: dark
+  //         } else {
+  //           if (themeOrder[0] != "dark" && themeOrder.includes("dark")) {
+  //             addBase({
+  //               ["@media (prefers-color-scheme: dark)"]: {
+  //                 [":root"]: includedThemesObj["[data-theme=dark]"],
+  //               },
+  //             });
+  //           }
+  //         }
+  //         // theme 0 with name
+  //         addBase({
+  //           ["[data-theme=" + themeOrder[0] + "]"]: includedThemesObj["[data-theme=" + themeOrder[0] + "]"],
+  //         });
+  //         // theme 1 with name
+  //         addBase({
+  //           ["[data-theme=" + themeOrder[1] + "]"]: includedThemesObj["[data-theme=" + themeOrder[1] + "]"],
+  //         });
+  //       } else {
+  //         addBase({
+  //           ["[data-theme=" + themeName + "]"]: includedThemesObj["[data-theme=" + themeName + "]"],
+  //         });
+  //       }
+  //     });
 
-    return {
-      includedThemesObj: includedThemesObj,
-      themeOrder: themeOrder,
-    };
-  },
+  //     return {
+  //       includedThemesObj: includedThemesObj,
+  //       themeOrder: themeOrder,
+  //     };
+  //   },
 };

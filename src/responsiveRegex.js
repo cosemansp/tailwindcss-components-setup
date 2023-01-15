@@ -3,14 +3,9 @@ module.exports = [
     pattern: /.*/,
   },
   {
-    // responsive utilites for responsive modifiers
+    // responsive utilities for responsive modifiers
     pattern: /.(sm|md|lg|xl)/,
-    variants: [
-      "sm",
-      "md",
-      "lg",
-      "xl",
-    ]
+    variants: ["sm", "md", "lg", "xl"],
   },
   {
     // color utilities for colors
