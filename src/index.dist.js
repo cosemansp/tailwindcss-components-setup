@@ -1,14 +1,11 @@
-const postcssJs = require("postcss-js");
-// const postcssPrefix = require("./lib/postcss-prefixer");
 const colors = require("./colors/index");
 const pkg = require("../package.json");
-const components = require("../dist/components");
-const utilities = require("../dist/utilities");
 const colorFunctions = require("./colors/functions");
 const themes = require("./colors/themes");
+const components = require("../dist/components");
+const utilities = require("../dist/utilities");
 
 const mainFunction = ({ addBase, addComponents, addUtilities, config, postcss }) => {
-  let includedItems = [];
   let logs = false;
   if (config("myLib.logs") != false) {
     logs = true;
@@ -20,42 +17,20 @@ const mainFunction = ({ addBase, addComponents, addUtilities, config, postcss })
     console.group();
   }
 
-  // inject components
-  let file = components;
-  includedItems.push("components");
+  // add theme colors
+  addBase({
+    [":root"]: colorFunctions.convertToHsl(themes["[data-theme=light]"]),
+    ["@media (prefers-color-scheme: dark)"]: {
+      [":root"]: colorFunctions.convertToHsl(themes["[data-theme=dark]"]),
+    },
+    ["[data-theme=dark]"]: colorFunctions.convertToHsl(themes["[data-theme=dark]"]),
+  });
 
-  // add prefix to class names if specified
-  // const prefix = config("myLib.prefix");
-  // let postcssJsProcess;
-  // if (prefix) {
-  //   try {
-  //     postcssJsProcess = postcssJs.sync(postcssPrefix({ prefix, ignore: [] }));
-  //   } catch (error) {
-  //     logs && console.error(`Error occurred and prevent applying the "prefix" option:`, error);
-  //   }
-  // }
-  // const shouldApplyPrefix = prefix && postcssJsProcess;
-  // if (shouldApplyPrefix) {
-  //   file = postcssJsProcess(file);
-  // }
-  addComponents(file);
+  // add dist components
+  addComponents(components);
 
-  const darkThemeName = config("myLib.darkTheme");
-  const darkTheme = config("myLib.darkTheme");
-  const themeInjector = colorFunctions.injectThemes(addBase, darkTheme, themes);
-  includedItems.push(themeInjector.themeOrder.length + " themes");
-
-  // inject @utilities style needed by components
-  if (config("myLib.utils") != false) {
-    addComponents(utilities, { variants: ["responsive"] });
-    includedItems.push("utilities");
-  }
-
-  if (logs) {
-    console.log("\x1b[32m%s\x1b[0m", "✔︎ Including:", "\x1b[0m", "" + includedItems.join(", "));
-    console.log();
-    console.groupEnd();
-  }
+  // add dist utilities
+  addUtilities(utilities);
 };
 
 module.exports = require("tailwindcss/plugin")(mainFunction, {

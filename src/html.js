@@ -10,3 +10,5 @@ export const html = (strings, ...values) => {
   }
   return dedent(newStr);
 };
+
+export { dedent };

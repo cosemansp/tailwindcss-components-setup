@@ -1,4 +1,4 @@
-import { Meta, Canvas, Story, Source } from "@storybook/blocks";
+import { Canvas, Story } from "@storybook/blocks";
 
 # Typography
 
@@ -8,10 +8,10 @@ adds some style to @tailwindcss/typography so it will use the same theme as othe
 
 Here you can see how elements will look using @tailwindcss/typography.:
 
-<Canvas>
+<Canvas withSource="open" withToolbar>
   <Story id="layout-and-typography--headings" />
 </Canvas>
 
-<Canvas>
+<Canvas withToolbar>
   <Story id="layout-and-typography--sample-text" />
 </Canvas>

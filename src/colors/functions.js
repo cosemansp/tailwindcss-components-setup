@@ -167,6 +167,25 @@ module.exports = {
     return input;
   },
 
+  injectThemes: function (addBase, themes, darkTheme) {
+    // add light theme
+    addBase({
+      [":root"]: this.convertToHsl(themes["[data-theme=light]"]),
+    });
+
+    // add dark theme
+    if (darkTheme !== false) {
+      addBase({
+        ["@media (prefers-color-scheme: dark)"]: {
+          [":root"]: this.convertToHsl(themes["[data-theme=dark]"]),
+        },
+      });
+      addBase({
+        ["[data-theme=dark]"]: this.convertToHsl(themes["[data-theme=dark]"]),
+      });
+    }
+  },
+
   //   injectThemes: function (addBase, config, themes) {
   //     let includedThemesObj = new Object();
 

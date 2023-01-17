@@ -2,21 +2,20 @@
   "name": "tailwindcss-library-starter",
   "version": "1.0.0",
   "description": "Starter template for tailwindCSS library",
-  "main": "src/index.js",
+  "main": "src/index.dist.js",
   "typings": "src/index.js",
   "scripts": {
     "prettier": "prettier --write .",
-    "precomponents": "postcss --config src/components src/components/*.css --base src --dir dist",
-    "components": "cat dist/components/*.css > dist/components.css",
+    "precomponents": "postcss --config src/components src/components/**/*.css --base src --dir dist",
+    "components": "cat dist/components/**/*.css > dist/components.css",
     "postcomponents": "prejss-cli dist/components.css --format commonjs",
     "preutilities": "postcss --config src/utilities src/utilities/*.css --base src --dir dist",
     "utilities": "cat dist/utilities/*.css > dist/utilities.css",
     "postutilities": "prejss-cli dist/utilities.css --format commonjs",
-    "themes": "postcss src/themes/index.css -o dist/themes.css --config src/themes",
-    "build": "npm run utilities && npm run components && npm run prejss && npm run themes && npm run full",
-    "dev": "cd src/docs && npm run dev",
+    "build": "npm run utilities && npm run components",
+    "dev": "npm run storybook",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build:storybook": "storybook build"
   },
   "repository": {
     "type": "git",

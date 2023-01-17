@@ -1,5 +1,5 @@
 import mdx from "./typography.mdx";
-import { html } from "../html";
+import { html } from "../../html";
 
 export default {
   title: "Layout and Typography",

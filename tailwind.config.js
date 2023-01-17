@@ -1,8 +1,7 @@
 module.exports = {
   // prettier-ignore
   content: [
-    "./src/**/*.{js,jsx,ts,tsx}",
-    "./stories/**/*.{js,jsx,ts,tsx}"
+    "./src/**/*.{js,jsx,ts,tsx,html,mdx}",
   ],
   // map dark mode to `data-theme` attribute
   // this is also used by storybook to set the theme

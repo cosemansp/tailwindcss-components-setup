@@ -1,4 +1,5 @@
 import "./style.css";
+import React from 'react';
 
 export const parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },
@@ -12,6 +13,8 @@ export const parameters = {
 
 export const decorators = [(story, context) => {
   const { theme } = context.globals;
+
+  let storyContext = story();
 
   // inject 'data-theme' attribute to the root element
   // so we can use it in our CSS to change the theme
@@ -30,7 +33,7 @@ export const decorators = [(story, context) => {
   }
 
   // our stories are just funtions that return html string
-  return story();
+  return storyContext;
 }];
 
 export const globalTypes = {
